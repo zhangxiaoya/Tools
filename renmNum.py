@@ -2,12 +2,30 @@
 import os
 import sys
 
-if len(sys.argv) != 3:
+if len(sys.argv) == 1:
     print "Usage: ./renmDS pathname forMat"
+    print "before rename:"
+    print "--pathname"
+    print "--+ oldfilename-1.fotMat"
+    print "--+ oldfilename-2.fotMat"
+    print "        ......         "
+    print "--+ oldfilename-n.fotMat"
+    print "after rename:"
+    print "--pathname"
+    print "--+        00001.format"
+    print "--+        00002.format"
+    print "        ......         "
+    print "--+        0000n.format"
+    print " "
+    print "Note: Default forMat = ppm"
+    print " "
     sys.exit()
+if len(sys.argv) == 2:
+    forMat = ".ppm"
+else:
+    forMat = "." + sys.argv[2]
 
 pathname = sys.argv[1]
-forMat = "." + sys.argv[2]
 
 reguStr = '%05d'
 
