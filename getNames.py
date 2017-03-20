@@ -10,29 +10,43 @@ if len(sys.argv) == 1:
     print("----: Default forMat = lib")
     print(" ")
     sys.exit()
-    
+
 if len(sys.argv) == 2:
-    forMat = ".lib"
+    FORMAT = ".lib"
 else:
-    forMat = "." + sys.argv[2]
+    FORMAT = "." + sys.argv[2]
 
-pathname = sys.argv[1]
+PATHNAME = sys.argv[1]
 
-fileNameList = [];
+debugFileNameList = []
+releaseFileNameList = []
 
-def rename():
-    for(path,dirs,files) in os.walk(pathname):
+print("Start reading files")
+print("Finding...")
+def getFileName():
+    for(path, dirs, files) in os.walk(PATHNAME):
         idx = 0
         for filename in files:
+            name = os.path.splitext(filename)[0]
             ext = os.path.splitext(filename)[1]
-            if(ext == forMat):
-                fileNameList.append(filename)
+            if(ext == FORMAT):
+                if(name[-1] == 'd'):
+                  debugFileNameList.append(filename)
+                else:
+                    releaseFileNameList.append(filename)
                 print(filename)
 
-    saveReultFullName = pathname + "\\names.txt"
-    saveFileNames = open(saveReultFullName,'w')
-    saveFileNames.writelines([name + '\n' for name in fileNameList])
+    saveReultFullName = PATHNAME + "\\releaseNames.txt"
+    saveFileNames = open(saveReultFullName, 'w')
+    saveFileNames.writelines([name + '\n' for name in releaseFileNameList])
     saveFileNames.close()
 
+    saveReultFullName = PATHNAME + "\\debugNames.txt"
+    saveFileNames = open(saveReultFullName, 'w')
+    saveFileNames.writelines([name + '\n' for name in debugFileNameList])
+    saveFileNames.close()
+
+
 if __name__ == '__main__':
-    rename()
+    getFileName()
+    print("Done!")
