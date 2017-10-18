@@ -20,6 +20,7 @@ if len(sys.argv) == 1:
     print("Note: Default forMat = bmp")
     print(" ")
     sys.exit()
+
 if len(sys.argv) == 2:
     forMat = ".bmp"
 else:
@@ -27,25 +28,23 @@ else:
 
 pathname = sys.argv[1]
 
-reguStr = '%05d'
-
 def rename():
     for(path,dirs,files) in os.walk(pathname):
         idx = 0
         for filename in files:
             fileName, extention = os.path.splitext(filename)
             if(extention == forMat):
-                firstPart = fileName.split('-')
-                newFileName = fileName + "-" + firstPart
+                firstPart = fileName.split("_")[0]
+                print(firstPart)
+                newFileName = "Frame_" + firstPart
                 print(fileName + "  =>  " + newFileName)
-                # newname = newname + forMat
-                # oldpath = path + "//" + filename
-                # newpath = path + "//" + newname
-                # try:
-                    # os.rename(oldpath,newpath)
-                # except BaseException, e:
-                    # print(str(e))
-                # print newpath
+                newNameWithFormat = newFileName + forMat
+                oldFullName = path + "//" + filename
+                newFullName = path + "//" + newNameWithFormat
+                try:
+                    os.rename(oldFullName,newFullName)
+                except BaseException as e:
+                    print(str(e))
 
 if __name__ == '__main__':
     rename()
